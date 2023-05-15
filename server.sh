@@ -5,14 +5,14 @@ LINKER="lld"
 DIR=`readlink -f .`
 MAIN=`readlink -f ${DIR}/..`
 KERNEL_DEFCONFIG=alioth_defconfig
-export PATH="$MAIN/clang/bin:$PATH"
+export PATH="$MAIN/toolchain/bin:$PATH"
 export ARCH=arm64
 export SUBARCH=arm64
-export KBUILD_COMPILER_STRING="$($MAIN/clang/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
+export KBUILD_COMPILER_STRING="$($MAIN/toolchain/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
 
-if ! [ -d "$MAIN/clang" ]; then
+if ! [ -d "$MAIN/toolchain" ]; then
 echo "ZYC clang not found! Cloning..."
-if ! git clone -q https://gitlab.com/ZyCromerZ/clang.git --depth=1 --single-branch $MAIN/clang; then
+if ! git clone -q https://gitlab.com/ZyCromerZ/clang.git --depth=1 --single-branch $MAIN/toolchain; then
 echo "Cloning failed! Aborting..."
 exit 1
 fi
@@ -51,7 +51,7 @@ cd tmp
 7za a -mx9 tmp.zip *
 cd ..
 rm *.zip
-cp -fp tmp/tmp.zip RealKing-Alioth-MiUi-$TIME.zip
+cp -fp tmp/tmp.zip Darwin_vxx_ALIOTH_$TIME.zip
 rm -rf tmp
 echo $TIME
 
